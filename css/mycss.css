@@ -1,7 +1,8 @@
+
+/*circle-provider*/
+
 .progress-bar{
   
-  
-    
     display: inline-block;
     position: relative;
     text-align: center;
@@ -18,15 +19,13 @@
     left: 0;
     width: 100%;
     text-align: center;
-   
-    
-    
-
     color: black;
-}
-#Home div{
+} 
+ .block-bar{
     display: block;
 }
+
+
 
 .steps {
   margin: 40px;

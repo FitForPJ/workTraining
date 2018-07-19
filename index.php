@@ -44,59 +44,86 @@
 
             <div class="col-10 container-fluid p-0">
               
-            <section class=" p-3 p-lg-5 d-flex flex-row justify-content-center" id="Home">
-                            <div class="progress-bar status-provider " id="progress">
-                                <strong class>UIH</strong>
-                            </div>
-                            <div class="progress-bar status-provider" id="progress1">
-                                <strong class><?php echo "EnGenius"?></strong>
-                            </div>
-
-                             <div class="progress-bar " id="progress2">
-                                <strong class><?php echo "Rujie"?></strong>
-                            </div>
-                            
+            <section class=" p-1 p-lg-3  justify-content-center" id="Home">
+                        <div class="steps steps-5 text-center">
+                            <?php
+                                $num_pid = array(0,0,0,0,0); 
+                                 $query = mysqli_query($conn,"SELECT name,provider_id FROM provider");
+                                 $query1 = mysqli_query($conn,"SELECT provider_id FROM customer");
+                                 while($result=mysqli_fetch_array($query,MYSQLI_NUM)){
+                                    ++$i;
+                                    while($result1=mysqli_fetch_array($query1,MYSQLI_NUM)){
+                                       
+                                        if($result1[0] == $result[1])
+                                            $num_pid[0]++; //UIH
+                                        else if($result1[0]==$result[1]){
+                                            $num_pid[1]++; //Symphony
+                                        }
+                                        else if($result1[0]==$result[1]){
+                                            $num_pid[2]++; //TOT
+                                        }
+                                        else if($result1[0]==$result[1]){
+                                            $num_pid[3]++; //3BB
+                                        }
+                                        else{
+                                            $num_pid[4]++; //CAT
+                                        }
+                                         $j++; 
+                                    }
+                                   
+                                    echo " <div class=\"progress-bar status-provider \" id=\"progress\">
+                                    <strong>".$result[1].$num_pid[$result[1]]."</strong>
+                                </div>"; 
+                                    
+                                 }
+                            ?>
+                           
+                        </div>
              </section>
 
-      <section class="p-0 p-lg-5 " id="Customer">
+      <section class="p-0 p-lg-3 " id="Customer">
         <ul class="steps steps-5 text-center ">
-          <li class="current"><a href="#" title=""><span>UIH</span></a></li>
+          <li class="current"><a href="#" title=""><span>ALL</span></a></li>
+          <?php 
+            $query = mysqli_query($conn,"SELECT name FROM provider");
+            while($result=mysqli_fetch_array($query,MYSQLI_NUM)){
+                $i++;
+            echo " <li><a href=\"#\" title=\"\"><span>".$result[0]."</span></a></li>";
+            }
+          ?>
+          <!-- <li class><a href="#" title=""><span>UIH</span></a></li>
           <li><a href="#" title=""><span>Symphony</span></a></li>
           <li ><a href="#" title=""><span>3BB</span></a></li>
           <li><a href="#" title=""><span>CAT</span></a></li>
-          <li><a href="#" title=""><span>TOT</span></a></li>
+          <li><a href="#" title=""><span>TOT</span></a></li> -->
         </ul>
 
         <!--Table-->
         
 <!--Top Table UI-->
 
-<div class="card card-cascade narrower">
+<div class="card card-cascade narrower border border-success">
 
 <!--Card image-->
 <div class="view view-cascade gradient-card-header blue-gradient narrower py-2  mb-3 d-flex justify-content-center align-items-center bg-success w-100">
 
-
     <a  class="white-text mx-3">Information</a>
-
-   
 
 </div>
 <!--/Card image-->
 
-<div class="px-4">
+<div class="px-4 ">
 
     
         <!--Table-->
-        <table class="table table-hover mb-0" id="infotb" cellspacing="0" >
+        <table class="table table-hover mb-0 border border-success" id="infotb" cellspacing="0" >
 
             <!--Table head-->
             <thead>
                 <tr>
                     <th>
                         <input class="checkAll" type="checkbox" id="checkbox">
-                       
-                    </th>
+                        <label class="form-check-label" for="checkbox1" class="label-table"></label>
                     <th class="th-lg"><a>No. </a></th>
                     <th class="th-lg"><a >Customer Name</a></th>
                     <th class="th-lg"><a >CID</a></th>
@@ -127,6 +154,7 @@
                     echo "<td>".$result[5]."</td>";
                     echo "</tr>";
                   }
+                  $conn->close();
                 ?>
                 <tr>
                     <th scope="row">
@@ -182,7 +210,7 @@
         <!--Table-->
     </div>
 
-    <hr class="my-0">
+    
 
     <!--Bottom Table UI-->
     
@@ -193,9 +221,9 @@
         
       </section>
 
-      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="education">
-        <div class="my-auto" id="description">
-         <p>test</p>
+      <section class=" p-1 p-lg-3 d-flex flex-column" id="education">
+        <div class="my-auto bg-white border border-success text-success"  id="txtHint">  
+          
         </div>
       </section>
 
@@ -239,10 +267,22 @@
   var table = $('#infotb').DataTable();
  
 $('#infotb').on( 'click', 'tr', function () {
-    var id = table.row( this ).data();
- 
-    alert( 'Clicked row id '+id[1]+id[2]+id[3]+id[4]+id[5]+id[6] );
+    var data = table.row( this ).data();
+   
+    var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "showdetail.php?variable=" + data[3], true);
+        xmlhttp.send();
+
+   
 } );
+
+
+
 
 
 
