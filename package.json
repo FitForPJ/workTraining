@@ -9,6 +9,7 @@
     "daterangepicker": "^3.0.3",
     "electron": "^2.0.5",
     "glyphicons": "^0.2.0",
+    "hamburgers": "^0.9.3",
     "jquery": "^3.3.1",
     "jquery-circle-progress": "^1.2.2",
     "popper.js": "^1.14.3",

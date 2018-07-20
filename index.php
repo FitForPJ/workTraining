@@ -1,6 +1,14 @@
 
 <!DOCTYPE html>
 <?php 
+   
+
+    session_start();
+	if($_SESSION['userlogin'] == ''){
+		echo "<meta http-equiv='refresh' content='0;url=login.php' />";
+		exit(0);
+    } 
+    
     include_once "database/config.php";
 ?>
 <html>
@@ -37,6 +45,7 @@
                       </ul>
                     </li>  
                     <li><a href="">Export</a></li> 
+                    <li><a href="logout.php">Sign Out</a></li> 
                   </ul>
                  
                </nav>
@@ -44,25 +53,26 @@
 
             <div class="col-10 container-fluid p-0">
               
-            <section class=" p-1 p-lg-3  justify-content-center" id="Home">
+            <section  id="Home">
                         <div class="steps steps-5 text-center">
                             <?php
                                 $num_pid = array(0,0,0,0,0); 
                                  $query = mysqli_query($conn,"SELECT name,provider_id FROM provider");
                                  $query1 = mysqli_query($conn,"SELECT provider_id FROM customer");
+                                 $k=0;
                                  while($result=mysqli_fetch_array($query,MYSQLI_NUM)){
-                                    ++$i;
+                                 
                                     while($result1=mysqli_fetch_array($query1,MYSQLI_NUM)){
                                        
-                                        if($result1[0] == $result[1])
+                                        if($result[1] == $result1[0])
                                             $num_pid[0]++; //UIH
-                                        else if($result1[0]==$result[1]){
+                                        else if($result[1]==$result1[0]){
                                             $num_pid[1]++; //Symphony
                                         }
-                                        else if($result1[0]==$result[1]){
+                                        else if($result[1]==$result1[0]){
                                             $num_pid[2]++; //TOT
                                         }
-                                        else if($result1[0]==$result[1]){
+                                        else if($result[1]==$result1[0]){
                                             $num_pid[3]++; //3BB
                                         }
                                         else{
@@ -71,10 +81,18 @@
                                          $j++; 
                                     }
                                    
-                                    echo " <div class=\"progress-bar status-provider \" id=\"progress\">
-                                    <strong>".$result[1].$num_pid[$result[1]]."</strong>
-                                </div>"; 
-                                    
+                                    echo "
+                                      <div class=\" block-progress p-2\">  
+                                        <div class=\"progress-bar status-provider d-block\" id=\"progress\">
+                                            <strong>".$result[0]."</strong>
+                                        </div>
+                                        <div class=\" d-block p-2 border border-success\" >
+                                            <strong>".$num_pid[$k]."   user</strong>
+                                        </div>
+                                      </div>
+                                     ";
+                                      
+                                 $k++;
                                  }
                             ?>
                            
@@ -241,28 +259,14 @@
 <script src="myscript.js"></script>
 <script>
   $('.status-provider').circleProgress({
-    value: 0.70,
-    size: 200,
+    value: 1,
+    size: 150,
     fill: {
-      gradient: ["red", "orange"]
+      gradient: ["green", "black"]
     }
   });
 
-   $('#progress1').circleProgress({
-    value: 0.75,
-    size: 200,
-    fill: {
-      gradient: ["red", "orange"]
-    }
-  });
-
-  $('#progress2').circleProgress({
-    value: 0.91,
-    size: 200,
-    fill: {
-      gradient: ["red", "orange"]
-    }
-  });
+   
 
   var table = $('#infotb').DataTable();
  
