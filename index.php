@@ -18,6 +18,8 @@
     <title>Customer Information</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css"  href="css/bootstrap.min.css" /> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+ <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
    
     <link rel="stylesheet" type="text/css" href="css/mycss.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"  >
@@ -109,11 +111,7 @@
             echo " <li><a href=\"#\" title=\"\"><span>".$result[0]."</span></a></li>";
             }
           ?>
-          <!-- <li class><a href="#" title=""><span>UIH</span></a></li>
-          <li><a href="#" title=""><span>Symphony</span></a></li>
-          <li ><a href="#" title=""><span>3BB</span></a></li>
-          <li><a href="#" title=""><span>CAT</span></a></li>
-          <li><a href="#" title=""><span>TOT</span></a></li> -->
+        
         </ul>
 
         <!--Table-->
@@ -148,7 +146,7 @@
                     <th class="th-lg"><a >Bandwidth</a></th>
                     <th class="th-lg"><a >Start(date)</a></th>
                     <th class="th-lg"><a >Contract</a></th>
-                    
+                    <th class="th-lg"><a >Actions</a></th>
                 </tr>
             </thead>
             <!--Table head-->
@@ -162,7 +160,7 @@
                 while($result=mysqli_fetch_array($query,MYSQLI_NUM)){
                  $i++;
                  echo "<tr>";
-                     echo "<th scope=\"row\"><input  type=\"checkbox\" id=\"checkbox1\">
+                     echo "<th scope=\"row\" class=\" pl-3\" ><input  type=\"checkbox\" id=\"checkbox1\">
                         <label class=\"form-check-label\" for=\"checkbox1\" class=\"label-table\"></label></th>";
                     echo "<td>$i</td>";
                     echo "<td>".$result[0]."</td>";
@@ -170,6 +168,10 @@
                     echo "<td>".$result[3]."</td>";
                     echo "<td>".$result[4]."</td>";
                     echo "<td>".$result[5]."</td>";
+                    echo "<td>
+                            <a href=\"#\" class=\"edit\" title=\"Edit\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE254;</i></a>
+                            <a href=\"#\" onclick=\"javascript:myFunc()\" class=\"delete\" title=\"Delete\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE872;</i></a>
+                        </td>";
                     echo "</tr>";
                   }
                   $conn->close();
@@ -284,6 +286,20 @@ $('#infotb').on( 'click', 'tr', function () {
 
    
 } );
+
+function DeleteCustomer(cid) {
+    var conf = confirm("Are you sure, do you really want to delete User?");
+    if (conf == true) {
+        $.post("ajax/deleteUser.php", {
+                id: id
+            },
+            function (data, status) {
+                // reload Users by using readRecords();
+                readRecords();
+            }
+        );
+    }
+}
 
 
 
