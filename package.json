@@ -6,6 +6,7 @@
   "dependencies": {
     "ajax": "0.0.4",
     "animsition": "^4.0.2",
+    "bootstrap": "^4.1.2",
     "daterangepicker": "^3.0.3",
     "electron": "^2.0.5",
     "glyphicons": "^0.2.0",

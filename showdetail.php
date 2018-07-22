@@ -33,5 +33,5 @@ while($result=mysqli_fetch_array($query,MYSQLI_NUM)){
        
      }
 
-     $conn->close();
-    ?>
+    
+?>
