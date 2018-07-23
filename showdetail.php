@@ -5,21 +5,12 @@
 
 
 // get the q parameter from URL
-$q = $_REQUEST["variable"];
+if (isset($_GET['showdetail'])) {
+  $cid = $_GET['cid'];
+  $query = mysqli_query($conn,"SELECT * FROM customer WHERE cid='".$cid."'");
 
-$hint = "";
-
-// $sql = "SELECT name FROM provider WHERE name='".$name."'";
-// 		$result= $conn->query($sql);
-$query = mysqli_query($conn,"SELECT * FROM customer WHERE cid='".$q."'");
-
-
-
-// Output "no suggestion" if no hint was found or output correct values 
 while($result=mysqli_fetch_array($query,MYSQLI_NUM)){
     $i++;
-   
-      
        echo "<p>".$i."</p>";
        echo "<p>".$result[0]."</p>";
        echo "<p>".$result[1]."</p>";
@@ -32,6 +23,12 @@ while($result=mysqli_fetch_array($query,MYSQLI_NUM)){
        echo "<p>".$result[8]."</p>";
        
      }
+  
+
+}
+
+
+
 
     
 ?>

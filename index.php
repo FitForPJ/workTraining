@@ -27,7 +27,7 @@ include_once "database/config.php";
 </head>
 <body>
    
-    <div class="container-fluid">
+    <div class="container-fluid h-100">
         <div class="row ">
             <div class="col-2 text-center bg-success d-flex flex-column p-0">
                <nav class="navbar justify-content-center text-center text-white">
@@ -136,7 +136,7 @@ include_once "database/config.php";
                 <tr>
                     <th>
                         <input class="checkAll" type="checkbox" id="checkbox">
-                        <label class="form-check-label" for="checkbox1" class="label-table"></label>
+                        <!-- <label class="form-check-label" for="checkbox1" class="label-table"></label> -->
                     <th class="th-lg"><a>No. </a></th>
                     <th class="th-lg"><a >Customer Name</a></th>
                     <th class="th-lg"><a >CID</a></th>
@@ -156,7 +156,7 @@ include_once "database/config.php";
 
                 while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
                     $i++;
-                    echo "<tr>";
+                    echo "<tr >";
                     echo "<th scope=\"row\" class=\" pl-3\" ><input  type=\"checkbox\" id=\"checkbox1\">
                         <label class=\"form-check-label\" for=\"checkbox1\" class=\"label-table\"></label></th>";
                     echo "<td>$i</td>";
@@ -195,6 +195,9 @@ include_once "database/config.php";
         <div class="my-auto bg-success  text-white"  id="txtHint">  
           
         </div>
+                    
+
+        
       </section>
 
         
@@ -207,7 +210,7 @@ include_once "database/config.php";
 <script src="node_modules/popper.js/dist/popper.js"></script>
 <script src="node_modules/jquery-circle-progress/dist/circle-progress.js"></script>
 <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
 <script>
   $('.status-provider').circleProgress({
@@ -220,33 +223,74 @@ include_once "database/config.php";
 
 $(document).ready(function() {
     $('#infotb').DataTable();
-
-    
-
     var table = $('#infotb').DataTable();
     
     $('#infotb').on( 'click', 'tr', function () {
     var data = table.row( this ).data();
-   
-    var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("txtHint").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET", "showdetail.php?variable=" + data[3], true);
-        xmlhttp.send();
+    
+    // var xmlhttp = new XMLHttpRequest();
+    //     xmlhttp.onreadystatechange = function() {
+    //         if (this.readyState == 4 && this.status == 200) {
+    //             document.getElementById("txtHint").innerHTML = this.responseText;
+    //         }
+    //     };
+    //     xmlhttp.open("GET", "showdetail.php?variable=" + data[3], true);
+    //     xmlhttp.send();
+        $.ajax({
+        url:'showdetail.php',
+        type:'GET',
+        data:{
+            'showdetail':1,
+            'cid': data[3],
+        },
+        success: function(response){
+            document.getElementById("txtHint").innerHTML = response;
+        }
+        });
+
     } );
 
     $('#infotb tbody').on( 'click', 'a.dt_delete', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        alert("delete"+data[3]);
+        
+        $.ajax({
+        url: 'updel.php',
+        type: 'GET',
+        data: {
+            'delete': 1,
+            'cid': data[3],
+        },
+        success: function(response){
+            // remove the deleted comment
+            alert("delete item successful");
+        }
+        });
        
     } );
 
      $('#infotb tbody').on( 'click', 'a.dt_edit', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        alert("edit"+data[3]);
+        //         var id = edit_id;
+        //     var name = $('#name').val();
+        //     var comment = $('#comment').val();
+        //     $.ajax({
+        //     url: 'server.php',
+        //     type: 'POST',
+        //     data: {
+        //         'update': 1,
+        //         'id': id,
+        //         'name': name,
+        //         'comment': comment,
+        //     },
+        //     success: function(response){
+        //         $('#name').val('');
+        //         $('#comment').val('');
+        //         $('#submit_btn').show();
+        //         $('#update_btn').hide();
+        //         $edit_comment.replaceWith(response);
+        //     }
+        //     });		
+        // });
        
        
     } );
