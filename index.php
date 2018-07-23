@@ -198,31 +198,6 @@ include_once "database/config.php";
       </section>
 
         
-        <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                    </div>
-                    <div class="modal-body">
-                    <p>Some text in the modal.</p>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-                
-                </div>
-            </div>
-
-
-
-    
-     
-
             </div>
             
         </div>
@@ -265,36 +240,14 @@ $(document).ready(function() {
 
     $('#infotb tbody').on( 'click', 'a.dt_delete', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        if(confirm("Are you sure to delete this row?")){
-                 
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("txtHint").innerHTML = this.responseText;
-                }
-             };
-            xmlhttp.open("GET", "updel.php?variable=" + data[3] +"&variable2=delete", true);
-            xmlhttp.send();
-
-			}
+        alert("delete"+data[3]);
        
     } );
 
      $('#infotb tbody').on( 'click', 'a.dt_edit', function () {
         var data = table.row( $(this).parents('tr') ).data();
-                
-        // if(confirm("Are you sure to delete this row?")){
-                 
-        //     var xmlhttp = new XMLHttpRequest();
-        //     xmlhttp.onreadystatechange = function() {
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             document.getElementById("txtHint").innerHTML = this.responseText;
-        //         }
-        //      };
-        //     xmlhttp.open("GET", "updel.php?variable=" + data[3] +"&variable2=delete", true);
-        //     xmlhttp.send();
-
-		// 	}
+        alert("edit"+data[3]);
+       
        
     } );
 
