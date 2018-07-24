@@ -28,6 +28,12 @@ while($result=mysqli_fetch_array($query,MYSQLI_NUM)){
 }
 
 
+if (isset($_GET['preditdetail'])) {
+  $cid = $_GET['cid'];
+  $query = mysqli_query($conn,"SELECT * FROM customer WHERE cid='".$cid."'");
+  $result=mysqli_fetch_array($query,MYSQLI_NUM);
+  echo $result;
+}
 
 
     

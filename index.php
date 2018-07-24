@@ -156,17 +156,18 @@ include_once "database/config.php";
 
                 while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
                     $i++;
-                    echo "<tr >";
-                    echo "<th scope=\"row\" class=\" pl-3\" ><input  type=\"checkbox\" id=\"checkbox1\">
+                    echo "<tr>";
+                    echo "<th scope=\"row\" class=\"  text-center  \" ><input  type=\"checkbox\" id=\"checkbox1\">
                         <label class=\"form-check-label\" for=\"checkbox1\" class=\"label-table\"></label></th>";
-                    echo "<td>$i</td>";
-                    echo "<td>" . $result[0] . "</td>";
-                    echo "<td>" . $result[1] . "</td>";
-                    echo "<td>" . $result[3] . "</td>";
-                    echo "<td>" . $result[4] . "</td>";
-                    echo "<td>" . $result[5] . "</td>";
-                    echo "<td>
-                            <a href=\"\" class=\"dt_edit\" title=\"Edit\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE254;</i></a>
+                    echo "<td class=\" text-center  \">$i</td>";
+                    echo "<td class=\" text-center  \">" . $result[0] . "</td>";
+                    echo "<td class=\" text-center  \">" . $result[1] . "</td>";
+                    echo "<td class=\" text-center  \">" . $result[3] . "</td>";
+                    echo "<td class=\" text-center  \">" . $result[4] . "</td>";
+                    echo "<td class=\" text-center  \">" . $result[5] . "</td>";
+                    echo "<td class=\" text-center  \">
+                          
+                    <a href=\"\" class=\"dt_edit\" data-toggle=\"modal\" ><i class=\"material-icons\">&#xE254;</i></a>
                             <a href=\"\"  class=\"dt_delete\" title=\"Delete\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE872;</i></a>
                         </td>";
                     echo "</tr>";
@@ -195,9 +196,68 @@ include_once "database/config.php";
         <div class="my-auto bg-success  text-white"  id="txtHint">  
           
         </div>
-                    
 
-        
+         <div class="container">
+            <!-- Modal -->
+            <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Customer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="form_edit">
+                        <div class="form-group">
+							<label>Name</label>
+							<input type="text" name="name" class="form-control" required  placeholder="Customer Name" value ="">
+						</div>
+                        <div class="form-group">
+							<label>CID</label>
+							<input type="text" name="cid" class="form-control" required placeholder="Customer CID" value ="">
+						</div>
+                        <div class="form-group">
+							<label>Bandwidth</label>
+							<input type="text" name="bandwidth" class="form-control" required placeholder="Bandwidth(Mbps)" value ="">
+						</div>
+						<div class="form-group">
+							<label>Date</label>
+							<input type="date" name="start"  class="form-control" required value ="">
+						</div>
+						<div class="form-group">
+							<label>Contract</label>
+							<input class="form-control" name="contract" required placeholder="Type Your Contract" value=""></input>
+						</div>
+                        <div class="form-group">
+							<label>Provider ID</label></br>
+                            <select  id="pid" class=" selectpicker w-100 p-2" name="pid" placeholder="Select Your Provider ID" >
+                                    <option></option>
+                                    <option>UIH</option>
+                                    <option>Symphony</option>
+                                    <option>3BB</option>
+                                    <option>CAT</option>
+                                    <option>TOT</option>
+                            </select>
+						</div>		
+						<div class="form-group">
+							<label>IP Address</label>
+                            <input id="ip1" class="form-control" name="ip1" placeholder="Type Your First IP Address" value=""></input>
+                            <input id="ip2" class="form-control" name="ip2" placeholder="Type Your Second IP Address" value=""></input>
+                            <input id="ip3" class="form-control" name="ip3" placeholder="Type Your Third IP Address" value=""></input>
+							
+						</div>
+                    </form>					
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="submit_edit">Save changes</button>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>       
       </section>
 
         
@@ -228,14 +288,7 @@ $(document).ready(function() {
     $('#infotb').on( 'click', 'tr', function () {
     var data = table.row( this ).data();
     
-    // var xmlhttp = new XMLHttpRequest();
-    //     xmlhttp.onreadystatechange = function() {
-    //         if (this.readyState == 4 && this.status == 200) {
-    //             document.getElementById("txtHint").innerHTML = this.responseText;
-    //         }
-    //     };
-    //     xmlhttp.open("GET", "showdetail.php?variable=" + data[3], true);
-    //     xmlhttp.send();
+
         $.ajax({
         url:'showdetail.php',
         type:'GET',
@@ -261,7 +314,8 @@ $(document).ready(function() {
             'cid': data[3],
         },
         success: function(response){
-            // remove the deleted comment
+           
+           
             alert("delete item successful");
         }
         });
@@ -269,7 +323,31 @@ $(document).ready(function() {
     } );
 
      $('#infotb tbody').on( 'click', 'a.dt_edit', function () {
+        
         var data = table.row( $(this).parents('tr') ).data();
+
+         $.ajax({
+        url:'showdetail.php',
+        type:'GET',
+        data:{
+            'preditdetail':1,
+            'cid': data[3],
+        },
+        success: function(response){
+             $("[name='name']").val(response[0]);
+        }
+        });
+
+
+
+
+       
+        
+        
+        $("#updateModal").modal();
+        
+       
+       
         //         var id = edit_id;
         //     var name = $('#name').val();
         //     var comment = $('#comment').val();
@@ -294,6 +372,8 @@ $(document).ready(function() {
        
        
     } );
+
+    $('')
 
 } );
 
