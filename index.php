@@ -9,7 +9,12 @@ if ($_SESSION['userlogin'] == '') {
     exit(0);
 }
 
-include_once "database/config.php";
+
+
+
+
+include "database/config.php";
+include "export.php";
 ?>
 <html>
 <head>
@@ -46,7 +51,7 @@ include_once "database/config.php";
                         <li><a href="">Edit/Delete</a></li>
                       </ul>
                     </li>  
-                    <li><a href="">Export</a></li> 
+                    <li><a href="?run">Export</a></li> 
                     <li><a href="logout.php">Sign Out</a></li> 
                   </ul>
                  
@@ -149,31 +154,10 @@ include_once "database/config.php";
             <!--Table head-->
 
             <!--Table body-->
-            <tbody>
-              <?php
-                $query = mysqli_query($conn, "SELECT * FROM customer");
-                $i = 0;
-
-                while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
-                    $i++;
-                    echo "<tr>";
-                    echo "<th scope=\"row\" class=\"  text-center  \" ><input  type=\"checkbox\" id=\"checkbox1\">
-                        <label class=\"form-check-label\" for=\"checkbox1\" class=\"label-table\"></label></th>";
-                    echo "<td class=\" text-center  \">$i</td>";
-                    echo "<td class=\" text-center  \">" . $result[0] . "</td>";
-                    echo "<td class=\" text-center  \">" . $result[1] . "</td>";
-                    echo "<td class=\" text-center  \">" . $result[3] . "</td>";
-                    echo "<td class=\" text-center  \">" . $result[4] . "</td>";
-                    echo "<td class=\" text-center  \">" . $result[5] . "</td>";
-                    echo "<td class=\" text-center  \">
-                          
-                    <a href=\"\" class=\"dt_edit\" data-toggle=\"modal\" ><i class=\"material-icons\">&#xE254;</i></a>
-                            <a href=\"\"  class=\"dt_delete\" title=\"Delete\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE872;</i></a>
-                        </td>";
-                    echo "</tr>";
-                }
-                $conn->close();
-                ?>
+            <tbody id="body_table">
+              <?php 
+                include_once "data_customer.php";
+              ?>
                 
             </tbody>
             <!--Table body-->
@@ -224,7 +208,7 @@ include_once "database/config.php";
 						</div>
 						<div class="form-group">
 							<label>Date</label>
-							<input type="date" name="start"  class="form-control" required value ="">
+							<input type="date" name="start"  class="form-control" required >
 						</div>
 						<div class="form-group">
 							<label>Contract</label>
@@ -252,7 +236,7 @@ include_once "database/config.php";
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="submit_edit">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="submit_edit" data-dismiss="modal">Save changes</button>
                 </div>
                 </div>
             </div>
@@ -284,6 +268,8 @@ include_once "database/config.php";
 $(document).ready(function() {
     $('#infotb').DataTable();
     var table = $('#infotb').DataTable();
+
+    //$('#body_table').load('data_customer.php')
     
     $('#infotb').on( 'click', 'tr', function () {
     var data = table.row( this ).data();
@@ -329,52 +315,75 @@ $(document).ready(function() {
          $.ajax({
         url:'showdetail.php',
         type:'GET',
+        dataType: 'JSON',
         data:{
             'preditdetail':1,
             'cid': data[3],
         },
         success: function(response){
-             $("[name='name']").val(response[0]);
+                var len = response.length;
+                for(var i=0; i<len; i++){
+                    $("[name='name']").val(response[i].name);
+                    $("[name='cid']").val(response[i].cid);
+                    $("[name='bandwidth']").val(response[i].bandwidth);
+                    $("[name='start']").val(response[i].start);
+                    $("[name='contract']").val(response[i].contract);
+                    if(response[i].pid == 1)
+                        $("[name='pid']").val("UIH");
+                    else if(response[i].pid == 2)
+                        $("[name='pid']").val("Symphony");
+                     else if(response[i].pid == 3)
+                        $("[name='pid']").val("TOT");
+                      else if(response[i].pid == 4)
+                        $("[name='pid']").val("CAT");
+                      else{
+                        $("[name='pid']").val("3BB");
+                      }
+                   
+                    $("[name='ip1']").val(response[i].ip1);
+                    $("[name='ip2']").val(response[i].ip2);
+                    $("[name='ip3']").val(response[i].ip3);
+                }
+                
         }
         });
-
-
-
-
-       
-        
-        
         $("#updateModal").modal();
         
+       $("#submit_edit").click(function() {
+
+
+                $.ajax({
+            url: 'updel.php',
+            type: 'POST',
+            data: {
+                'update': 1,
+                'name':  $("[name='name']").val(),
+                'cid':  $("[name='cid']").val(),
+                'bandwidth':  $("[name='bandwidth']").val(),
+                'start':  $("[name='start']").val(),
+                'contract': $("[name='contract']").val(),
+                'pid': $("[name='pid']").val(),
+                'ip1': $("[name='ip1']").val(),
+                'ip2':  $("[name='ip2']").val(),
+                'ip3':$("[name='ip3']").val(),
+            },
+            success: function(response){
+                alert(response) ;
+                table.clear()
+                    .draw();
+            }
+            });		
+               
+            //alert("Edit Succesful");
+
+        });
        
-       
-        //         var id = edit_id;
-        //     var name = $('#name').val();
+            //         var id = edit_id;
+            //     var name = $('#name').val();
         //     var comment = $('#comment').val();
-        //     $.ajax({
-        //     url: 'server.php',
-        //     type: 'POST',
-        //     data: {
-        //         'update': 1,
-        //         'id': id,
-        //         'name': name,
-        //         'comment': comment,
-        //     },
-        //     success: function(response){
-        //         $('#name').val('');
-        //         $('#comment').val('');
-        //         $('#submit_btn').show();
-        //         $('#update_btn').hide();
-        //         $edit_comment.replaceWith(response);
-        //     }
-        //     });		
-        // });
-       
-       
-    } );
-
-    $('')
-
+        
+        // });  
+    });
 } );
 
 

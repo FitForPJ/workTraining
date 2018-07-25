@@ -3,7 +3,7 @@
  include_once "database/config.php";
 
 
-
+ 
 // get the q parameter from URL
 if (isset($_GET['showdetail'])) {
   $cid = $_GET['cid'];
@@ -29,10 +29,22 @@ while($result=mysqli_fetch_array($query,MYSQLI_NUM)){
 
 
 if (isset($_GET['preditdetail'])) {
+  $return_arr = array();
   $cid = $_GET['cid'];
   $query = mysqli_query($conn,"SELECT * FROM customer WHERE cid='".$cid."'");
-  $result=mysqli_fetch_array($query,MYSQLI_NUM);
-  echo $result;
+
+  while($result=mysqli_fetch_array($query,MYSQLI_NUM)){
+    $return_arr[] = array("name" => $result[0],
+    "cid" => $result[1],
+    "bandwidth" => $result[3],
+    "start" => $result[4],
+    "contract" => $result[5],
+    "pid" => $result[2],
+    "ip1" => $result[6],
+    "ip2" => $result[7],
+    "ip3" => $result[8]);
+  }
+  echo json_encode($return_arr);
 }
 
 
