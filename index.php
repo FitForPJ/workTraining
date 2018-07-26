@@ -48,10 +48,9 @@ include "database/config.php";
                         <li><a href="#Customer">All</a></li>
                         <li><a href="add_customer.php">Add Customer</a></li>
                         <li><a href="add_provider.php">Add Provider</a></li>
-                        <li><a href="">Edit/Delete</a></li>
                       </ul>
                     </li>  
-                    <li><a href="?run">Export</a></li> 
+                    <li><a href="export.php">Export</a></li> 
                     <li><a href="logout.php">Sign Out</a></li> 
                   </ul>
                  
@@ -64,9 +63,8 @@ include "database/config.php";
                         <div class="steps steps-5 text-center">
                             <?php
                             $num_pid = array(0, 0, 0, 0, 0);
-                            $query = mysqli_query($conn, "SELECT name,provider_id FROM provider");
-                            $query1 = mysqli_query($conn, "SELECT provider_id FROM customer");
                             $k = 0;
+<<<<<<< HEAD
                             while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
                                   
                                 while ($result1 = mysqli_fetch_array($query1, MYSQLI_NUM)) {
@@ -81,10 +79,29 @@ include "database/config.php";
                                         $num_pid[3]++; //3BB
                                     } else {
                                         $num_pid[4]++; //CAT
+=======
+                            $query1 = mysqli_query($conn, "SELECT provider_id FROM customer");
+                            while ($result1 = mysqli_fetch_array($query1, MYSQLI_NUM)) {
+                                            $id = $result1[0];
+                                        if ($id === "1" )
+                                            $num_pid[0]++; //UIH
+                                        else if ($id === "2") {
+                                            $num_pid[1]++; //Symphony
+                                        } else if ($id === "3") {
+                                            $num_pid[2]++; //TOT
+                                        } else if ($id === "4") {
+                                            $num_pid[4]++; //3BB
+                                        } else {
+                                            $num_pid[3]++; //CAT
+                                        }
+                                      
+>>>>>>> b7c0f0d483be2d70163caaf7e8de674a6979e34e
                                     }
-                                    $j++;
-                                }
 
+                            $query = mysqli_query($conn, "SELECT name,provider_id FROM provider");
+                            while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
+                                
+                               
                                 echo "
                                       <div class=\" block-progress p-2\">  
                                         <div class=\"progress-bar status-provider d-block\" id=\"progress\">
@@ -95,8 +112,8 @@ include "database/config.php";
                                         </div>
                                       </div>
                                      ";
-
                                 $k++;
+                           
                             }
                             ?>
                            
@@ -200,7 +217,11 @@ include "database/config.php";
 						</div>
                         <div class="form-group">
 							<label>CID</label>
+<<<<<<< HEAD
 							<input type="text" name="cid" class="form-control " required placeholder="Customer CID" value ="" disabled>
+=======
+							<input type="text" name="cid" class="form-control" required placeholder="Customer CID" value ="" disabled>
+>>>>>>> b7c0f0d483be2d70163caaf7e8de674a6979e34e
 						</div>
                         <div class="form-group">
 							<label>Bandwidth</label>
