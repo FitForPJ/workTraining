@@ -14,7 +14,7 @@ if ($_SESSION['userlogin'] == '') {
 
 
 include "database/config.php";
-include "export.php";
+
 ?>
 <html>
 <head>
@@ -68,9 +68,9 @@ include "export.php";
                             $query1 = mysqli_query($conn, "SELECT provider_id FROM customer");
                             $k = 0;
                             while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
-
+                                  
                                 while ($result1 = mysqli_fetch_array($query1, MYSQLI_NUM)) {
-
+                                   
                                     if ($result[1] == $result1[0])
                                         $num_pid[0]++; //UIH
                                     else if ($result[1] == $result1[0]) {
@@ -156,7 +156,7 @@ include "export.php";
             <!--Table body-->
             <tbody id="body_table">
               <?php 
-                include_once "data_customer.php";
+                include "data_customer.php";
               ?>
                 
             </tbody>
@@ -200,7 +200,7 @@ include "export.php";
 						</div>
                         <div class="form-group">
 							<label>CID</label>
-							<input type="text" name="cid" class="form-control" required placeholder="Customer CID" value ="">
+							<input type="text" name="cid" class="form-control " required placeholder="Customer CID" value ="" disabled>
 						</div>
                         <div class="form-group">
 							<label>Bandwidth</label>
@@ -369,8 +369,7 @@ $(document).ready(function() {
             },
             success: function(response){
                 alert(response) ;
-                table.clear()
-                    .draw();
+               
             }
             });		
                
