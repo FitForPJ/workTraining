@@ -1,24 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    $("button").click(function(){
-        $('#link').attr('value', 'new value');
-    });
-});
-</script>
-</head>
-<body>
+<?php
 
-<p><b>Note:</b> Check and uncheck the checkbox and then click the button to refresh content.</p>
-<button>Check value of attr() and prop()</button>
-<br><br>
+include "database/config.php";
+ $query = mysqli_query($conn, "SELECT name,provider_id FROM provider");
+ $result = mysqli_fetch_array($query, MYSQLI_NUM);
+ 
 
-<input type = 'text' value = 'http://www.link.com' id = 'link' />
-<label for="check1">Check me</label>
-<p id="p1"></p>
+ $query1 = mysqli_query($conn, "SELECT provider_id FROM customer");
+ while ($result1 = mysqli_fetch_array($query1, MYSQLI_NUM)) {
+         $id =(int) $result1[0];    
+            echo gettype($id);
+               echo $id = $result1[0];
+         }
+?>
 
-</body>
-</html>
