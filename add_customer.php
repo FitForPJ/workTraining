@@ -104,12 +104,12 @@
 						</span>
 
 						<span class="txt2">
-							Mada Center 8th floor, 379 Hudson St, New York, NY 10018 US
+						46/1 Moo.6, Prabaramee Rd., Kathu, Phuket 83120 Thailand 
 						</span>
 					</div>
 				</div>
 
-				<div class="dis-flex size1 p-b-47">
+				<!-- <div class="dis-flex size1 p-b-47">
 					<div class="txt1 p-r-25">
 						<span class="lnr lnr-phone-handset"></span>
 					</div>
@@ -123,9 +123,9 @@
 							+1 800 1236879
 						</span>
 					</div>
-				</div>
+				</div> -->
 
-				<div class="dis-flex size1 p-b-47">
+				<!-- <div class="dis-flex size1 p-b-47">
 					<div class="txt1 p-r-25">
 						<span class="lnr lnr-envelope"></span>
 					</div>
@@ -139,7 +139,7 @@
 							contact@example.com
 						</span>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>

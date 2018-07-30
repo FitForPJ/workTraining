@@ -68,7 +68,7 @@
 			</form>
 
 			<div class="contact100-more flex-col-c-m" >
-				<div class="flex-w size1 p-b-47">
+				<!-- <div class="flex-w size1 p-b-47">
 					<div class="txt1 p-r-25">
 						<span class="lnr lnr-map-marker"></span>
 					</div>
@@ -82,9 +82,9 @@
 							Mada Center 8th floor, 379 Hudson St, New York, NY 10018 US
 						</span>
 					</div>
-				</div>
+				</div> -->
 
-				<div class="dis-flex size1 p-b-47">
+				<!-- <div class="dis-flex size1 p-b-47">
 					<div class="txt1 p-r-25">
 						<span class="lnr lnr-phone-handset"></span>
 					</div>
@@ -98,9 +98,9 @@
 							+1 800 1236879
 						</span>
 					</div>
-				</div>
+				</div> -->
 
-				<div class="dis-flex size1 p-b-47">
+				<!-- <div class="dis-flex size1 p-b-47">
 					<div class="txt1 p-r-25">
 						<span class="lnr lnr-envelope"></span>
 					</div>
@@ -114,7 +114,7 @@
 							contact@example.com
 						</span>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>

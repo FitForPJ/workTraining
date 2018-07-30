@@ -64,22 +64,6 @@ include "database/config.php";
                             <?php
                             $num_pid = array(0, 0, 0, 0, 0);
                             $k = 0;
-<<<<<<< HEAD
-                            while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
-                                  
-                                while ($result1 = mysqli_fetch_array($query1, MYSQLI_NUM)) {
-                                   
-                                    if ($result[1] == $result1[0])
-                                        $num_pid[0]++; //UIH
-                                    else if ($result[1] == $result1[0]) {
-                                        $num_pid[1]++; //Symphony
-                                    } else if ($result[1] == $result1[0]) {
-                                        $num_pid[2]++; //TOT
-                                    } else if ($result[1] == $result1[0]) {
-                                        $num_pid[3]++; //3BB
-                                    } else {
-                                        $num_pid[4]++; //CAT
-=======
                             $query1 = mysqli_query($conn, "SELECT provider_id FROM customer");
                             while ($result1 = mysqli_fetch_array($query1, MYSQLI_NUM)) {
                                             $id = $result1[0];
@@ -95,7 +79,6 @@ include "database/config.php";
                                             $num_pid[3]++; //CAT
                                         }
                                       
->>>>>>> b7c0f0d483be2d70163caaf7e8de674a6979e34e
                                     }
 
                             $query = mysqli_query($conn, "SELECT name,provider_id FROM provider");
@@ -217,11 +200,7 @@ include "database/config.php";
 						</div>
                         <div class="form-group">
 							<label>CID</label>
-<<<<<<< HEAD
 							<input type="text" name="cid" class="form-control " required placeholder="Customer CID" value ="" disabled>
-=======
-							<input type="text" name="cid" class="form-control" required placeholder="Customer CID" value ="" disabled>
->>>>>>> b7c0f0d483be2d70163caaf7e8de674a6979e34e
 						</div>
                         <div class="form-group">
 							<label>Bandwidth</label>
@@ -296,17 +275,31 @@ $(document).ready(function() {
     var data = table.row( this ).data();
     
 
-        $.ajax({
-        url:'showdetail.php',
-        type:'GET',
-        data:{
-            'showdetail':1,
-            'cid': data[3],
-        },
-        success: function(response){
-            document.getElementById("txtHint").innerHTML = response;
+       
+
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+
+            $( "#txtHint" ).hide();
         }
-        });
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+
+             $.ajax({
+                url:'showdetail.php',
+                type:'GET',
+                data:{
+                    'showdetail':1,
+                    'cid': data[3],
+                },
+                success: function(response){
+                    document.getElementById("txtHint").innerHTML = response;
+                    $( "#txtHint" ).show();
+                }
+                });
+        }
 
     } );
 
