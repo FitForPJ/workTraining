@@ -50,7 +50,7 @@ while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
 
   $flag = false;
   foreach($data as $row) {
-    if(!$flag) {
+    if(!$flag) {  
       // display field/column names as first row
       $firstline = array_map( "map_colnames", array_keys($row));
       fputcsv($out, $firstline, ',', '"');

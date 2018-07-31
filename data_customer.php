@@ -1,7 +1,35 @@
 <?php 
 include "database/config.php";
 
-$query = mysqli_query($conn, "SELECT * FROM customer");
+if (isset($_GET['ALL'])) {
+    $query = mysqli_query($conn, "SELECT * FROM customer");
+ 
+  }
+else if (isset($_GET['UIH'])) {
+    $query = mysqli_query($conn, "SELECT * FROM customer WHERE provider_id='1'");
+  
+  }
+  else if (isset($_GET['Symphony'])) {
+    $query = mysqli_query($conn, "SELECT * FROM customer WHERE provider_id='2'");
+   
+   }
+   else if (isset($_GET['TOT'])) {
+    $query = mysqli_query($conn, "SELECT * FROM customer WHERE provider_id='3'");
+   
+   }
+   else if (isset($_GET['3BB'])) {
+    $query = mysqli_query($conn, "SELECT * FROM customer WHERE provider_id='5'");
+    
+   }
+   else if (isset($_GET['CAT'])) {
+    $query = mysqli_query($conn, "SELECT * FROM customer WHERE provider_id='4'");
+    
+   }
+   else{
+    $query = mysqli_query($conn, "SELECT * FROM customer");
+   }
+
+//$query = mysqli_query($conn, "SELECT * FROM customer");
 $i = 0;
 
 while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {

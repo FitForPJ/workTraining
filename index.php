@@ -106,12 +106,12 @@ include "database/config.php";
     <section class="p-0 p-lg-3 d-flex flex-column " id="Customer">
         <div class="d-flex justify-content-center"> 
             <ul class="steps steps-5 text-center " id="nav_tb">
-            <li class=""><a href="#" title=""><span>ALL</span></a></li>
+            <li class=""><a href="?ALL=true" title=""><span>ALL</span></a></li>
             <?php 
                 $query = mysqli_query($conn, "SELECT name FROM provider");
                 while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
                     ++$i;
-                    echo " <li id=\"nav_".$i."\" class=\"\"><a href=\"\"  title=\"\"><span>" . $result[0] . "</span></a></li>";
+                    echo " <li id=\"nav_".$i."\" class=\"current\"><a href=\"?".$result[0]."=true\"  title=\"\"><span>" .$result[0]. "</span></a></li>";
                 }
                 ?>
             
@@ -381,12 +381,9 @@ $(document).ready(function() {
        
           
     });
-    $('#nav_1').addClass('current')
-    $('#nav_1').on('click', function () {
-       
-        alert("I am an alert box!");
-  });
+    
 } );
+
 
 
 
