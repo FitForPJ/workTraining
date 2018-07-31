@@ -111,7 +111,7 @@ include "database/config.php";
                 $query = mysqli_query($conn, "SELECT name FROM provider");
                 while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
                     ++$i;
-                    echo " <li id=\"nav_".$i."\" class=\"current\"><a href=\"?".$result[0]."=true\"  title=\"\"><span>" .$result[0]. "</span></a></li>";
+                    echo " <li id=\"nav_".$i."\" class=\"\"><a href=\"?".$result[0]."=true\"  title=\"\"><span>" .$result[0]. "</span></a></li>";
                 }
                 ?>
             
@@ -163,7 +163,7 @@ include "database/config.php";
       </section>
 
       <section class=" p-1 p-lg-3 d-flex flex-column" id="education">
-        <div class="my-auto bg-success  text-white"  id="txtHint">  
+        <div class="my-auto p-0"  id="txtHint">  
           
         </div>
 

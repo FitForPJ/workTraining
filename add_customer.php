@@ -125,21 +125,17 @@
 					</div>
 				</div> -->
 
-				<!-- <div class="dis-flex size1 p-b-47">
+				<div class="dis-flex size1 p-b-47">
 					<div class="txt1 p-r-25">
-						<span class="lnr lnr-envelope"></span>
+						<span class="lnr lnr-home"></span>
 					</div>
 
 					<div class="flex-col size2">
-						<span class="txt1 p-b-20">
-							General Support
-						</span>
-
-						<span class="txt3">
-							contact@example.com
-						</span>
+						<span class="txt1 p-b-28"><a href="index.php">
+							Home
+						</a></span>
 					</div>
-				</div> -->
+				</div>
 			</div>
 		</div>
 	</div>
