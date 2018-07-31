@@ -103,76 +103,62 @@ include "database/config.php";
                         </div>
              </section>
 
-      <section class="p-0 p-lg-3 " id="Customer">
-        <ul class="steps steps-5 text-center ">
-          <li class="current"><a href="#" title=""><span>ALL</span></a></li>
-          <?php 
-            $query = mysqli_query($conn, "SELECT name FROM provider");
-            while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
-                $i++;
-                echo " <li><a href=\"#\" title=\"\"><span>" . $result[0] . "</span></a></li>";
-            }
-            ?>
+    <section class="p-0 p-lg-3 d-flex flex-column " id="Customer">
+        <div class="d-flex justify-content-center"> 
+            <ul class="steps steps-5 text-center " id="nav_tb">
+            <li class=""><a href="#" title=""><span>ALL</span></a></li>
+            <?php 
+                $query = mysqli_query($conn, "SELECT name FROM provider");
+                while ($result = mysqli_fetch_array($query, MYSQLI_NUM)) {
+                    ++$i;
+                    echo " <li id=\"nav_".$i."\" class=\"\"><a href=\"\"  title=\"\"><span>" . $result[0] . "</span></a></li>";
+                }
+                ?>
+            
+            </ul>
+        </div>                    
         
-        </ul>
 
         <!--Table-->
         
 <!--Top Table UI-->
 
-<div class="card card-cascade narrower border border-success">
-
-<!--Card image-->
-<div class="view view-cascade gradient-card-header blue-gradient narrower py-2  mb-3 d-flex justify-content-center align-items-center bg-success w-100">
-
-    <a  class="white-text mx-3">Information</a>
-
-</div>
+        <div class="card card-cascade narrower border border-success">
+            <div class="view view-cascade gradient-card-header blue-gradient narrower py-2  mb-3 d-flex justify-content-center align-items-center bg-success w-100">
+                <a  class="white-text mx-3">Information</a>
+            </div>
 <!--/Card image-->
+            <div class="px-4 ">
+                <table class="table table-hover mb-0 border border-success" id="infotb" cellspacing="0" >
 
-<div class="px-4 ">
+                    <!--Table head-->
+                    <thead>
+                        <tr>
+                            <th>
+                                <input class="checkAll" type="checkbox" id="checkbox">
+                                <!-- <label class="form-check-label" for="checkbox1" class="label-table"></label> -->
+                            <th class="th-lg text-center"><a>No. </a></th>
+                            <th class="th-lg text-center"><a >Customer Name</a></th>
+                            <th class="th-lg text-center"><a >CID</a></th>
+                            <th class="th-lg text-center"><a >Bandwidth</a></th>
+                            <th class="th-lg text-center"><a >Start(date)</a></th>
+                            <th class="th-lg text-center"><a >Contract</a></th>
+                            <th class="th-lg text-center"><a >Actions</a></th>
+                        </tr>
+                    </thead>
+                    <!--Table head-->
 
-    
-        <!--Table-->
-        <table class="table table-hover mb-0 border border-success" id="infotb" cellspacing="0" >
-
-            <!--Table head-->
-            <thead>
-                <tr>
-                    <th>
-                        <input class="checkAll" type="checkbox" id="checkbox">
-                        <!-- <label class="form-check-label" for="checkbox1" class="label-table"></label> -->
-                    <th class="th-lg"><a>No. </a></th>
-                    <th class="th-lg"><a >Customer Name</a></th>
-                    <th class="th-lg"><a >CID</a></th>
-                    <th class="th-lg"><a >Bandwidth</a></th>
-                    <th class="th-lg"><a >Start(date)</a></th>
-                    <th class="th-lg"><a >Contract</a></th>
-                    <th class="th-lg"><a >Actions</a></th>
-                </tr>
-            </thead>
-            <!--Table head-->
-
-            <!--Table body-->
-            <tbody id="body_table">
-              <?php 
-                include "data_customer.php";
-              ?>
-                
-            </tbody>
-            <!--Table body-->
-        </table>
-        <!--Table-->
-    </div>
-
-    
-
-    <!--Bottom Table UI-->
-    
-    <!--Bottom Table UI-->
-
-
-</div>  
+                    <!--Table body-->
+                    <tbody id="body_table">
+                    <?php 
+                        include "data_customer.php";
+                    ?>
+                        
+                    </tbody>
+                    <!--Table body-->
+                </table>
+            </div>
+        </div>  
         
       </section>
 
@@ -242,7 +228,7 @@ include "database/config.php";
             </div>
             </div>
         </div>       
-      </section>
+    </section>
 
         
             </div>
@@ -269,14 +255,13 @@ $(document).ready(function() {
     $('#infotb').DataTable();
     var table = $('#infotb').DataTable();
 
+
     //$('#body_table').load('data_customer.php')
+
     
     $('#infotb').on( 'click', 'tr', function () {
     var data = table.row( this ).data();
     
-
-       
-
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
 
@@ -305,7 +290,7 @@ $(document).ready(function() {
 
     $('#infotb tbody').on( 'click', 'a.dt_delete', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        
+    
         $.ajax({
         url: 'updel.php',
         type: 'GET',
@@ -323,8 +308,10 @@ $(document).ready(function() {
     } );
 
      $('#infotb tbody').on( 'click', 'a.dt_edit', function () {
-        
+       
+        $( "#txtHint" ).hide();
         var data = table.row( $(this).parents('tr') ).data();
+     
 
          $.ajax({
         url:'showdetail.php',
@@ -362,6 +349,8 @@ $(document).ready(function() {
         }
         });
         $("#updateModal").modal();
+
+       
         
        $("#submit_edit").click(function() {
 
@@ -383,20 +372,20 @@ $(document).ready(function() {
             },
             success: function(response){
                 alert(response) ;
-               
+              
             }
             });		
                
-            //alert("Edit Succesful");
-
+           
         });
        
-            //         var id = edit_id;
-            //     var name = $('#name').val();
-        //     var comment = $('#comment').val();
-        
-        // });  
+          
     });
+    $('#nav_1').addClass('current')
+    $('#nav_1').on('click', function () {
+       
+        alert("I am an alert box!");
+  });
 } );
 
 

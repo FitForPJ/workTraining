@@ -82,7 +82,7 @@
   top: 0;
   right: -25px; /* arrow width (negated) */
   display: block;
-  border-left: 25px solid transparent; /* width: arrow width */
+  border-left: 26px solid transparent; /* width: arrow width */
   border-top: 40px solid transparent; /* width: half height */
   border-bottom: 40px solid transparent; /* width: half height */
   width:0;
@@ -93,8 +93,8 @@
 /* Setup colors (both the background and the arrow) */
 
 /* Completed */
-.steps li { background-color: transparent; }
-.steps li::after { border-left-color: transparent ; }
+.steps li { background-color: #7C8437; }
+.steps li::after { border-left-color:  #7C8437 ; }
 
 /* Current */
 .steps li.current { background-color: #C36615; }
